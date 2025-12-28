@@ -79,12 +79,37 @@ main {
   margin-right: 5px;
 }
 
-.error {
-  color: #dc2626;
+.error,
+.error-placeholder {
   font-size: 0.875rem;
   margin: 10px auto;
-  align-self: center;
   text-align: center;
+  padding: 8px;
+  border-radius: 5px;
+  position: relative;
+  border: 1px solid #dc2626;
+}
+
+.error {
+  color: #dc2626;
+  background-color: #ffe8e8;
+  width: 50%;
+  border: 1px solid #dc2626;
+}
+
+.error-placeholder {
+  background-color: #fafaf8;
+  color: #fafaf8;
+  border-color:  #fafaf8;
+}
+
+.error svg {
+  vertical-align: middle;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
 }
 
 ul.ingredients-list {
@@ -174,4 +199,10 @@ ul.ingredients-list > li {
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+@media (max-width: 800px) {
+  .error {
+    width: 95%;
+  }
 }

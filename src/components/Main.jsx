@@ -1,6 +1,7 @@
 import React from "react";
 import IngredientsList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
+import { FaWindowClose } from "react-icons/fa";
 import { getRecipeFromChefClaude, getRecipeFromMistral } from "../ai";
 
 export default function Main() {
@@ -91,10 +92,13 @@ export default function Main() {
         )}
       </form>
 
-      {error && (
+      {error ? (
         <p id="ingredient-error" className="error">
-          {error}
+          {error.replace(/\b\w/g, (c) => c.toUpperCase())}
+          <FaWindowClose onClick={() => setError("")} />
         </p>
+      ) : (
+        <p className="error-placeholder">Placeholder</p>
       )}
 
       {ingredients.length > 0 && (
