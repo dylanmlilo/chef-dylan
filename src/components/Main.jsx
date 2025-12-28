@@ -30,16 +30,22 @@ export default function Main() {
     setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
   }
 
+  function clearIngredients() {
+    setIngredients([]);
+    setRecipe("");
+  }
+
   return (
     <main>
       <form action={addIngredient} className="add-ingredient-form">
         <input
           type="text"
-          placeholder="e.g. oregano"
+          placeholder="e.g. pasta"
           aria-label="Add ingredient"
           name="ingredient"
         />
-        <button>Add ingredient</button>
+        <button className="add">Add ingredient</button>
+        {ingredients.length > 0 && <button className="remove" type="button" onClick={clearIngredients}>Clear ingredients</button>}
       </form>
 
       {ingredients.length > 0 && (

@@ -57,10 +57,20 @@ main {
   width: 150px;
   font-size: 0.875rem;
   font-weight: 500;
+  cursor: pointer;
 }
 
-.add-ingredient-form > button::before {
+.add-ingredient-form > button.remove {
+  background-color: #dc2626;
+}
+
+.add-ingredient-form > button.add::before {
   content: "+";
+  margin-right: 5px;
+}
+
+.add-ingredient-form > button.remove::before {
+  content: "-";
   margin-right: 5px;
 }
 
