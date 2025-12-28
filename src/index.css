@@ -69,7 +69,6 @@ main {
   background-color: #dc2626;
 }
 
-
 .add-ingredient-form > button.add::before {
   content: "+";
   margin-right: 5px;
@@ -87,7 +86,6 @@ main {
   align-self: center;
   text-align: center;
 }
-
 
 ul.ingredients-list {
   margin-bottom: 48px;
@@ -141,4 +139,39 @@ ul.ingredients-list > li {
 .suggested-recipe-container ul li,
 .suggested-recipe-container ol li {
   margin-bottom: 8px;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #ff6b35;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container p {
+  color: #666;
+  font-style: italic;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

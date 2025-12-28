@@ -8,6 +8,8 @@ export default function Main() {
   const [recipe, setRecipe] = React.useState("");
   const [error, setError] = React.useState("");
   const [inputValue, setInputValue] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const recipeSection = React.useRef(null);
 
   React.useEffect(() => {
@@ -23,8 +25,19 @@ export default function Main() {
   }, [recipe]);
 
   async function getRecipe() {
-    const recipeMarkdown = await getRecipeFromChefClaude(ingredients);
-    setRecipe(recipeMarkdown);
+    setIsLoading(true);
+    setRecipe("");
+    setError("");
+
+    try {
+      const recipeMarkdown = await getRecipeFromChefClaude(ingredients);
+      setRecipe(recipeMarkdown);
+    } catch (err) {
+      setError("Failed to generate recipe. Please try again.");
+      console.error("Recipe generation error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function addIngredient(formData) {
@@ -51,6 +64,7 @@ export default function Main() {
     setIngredients([]);
     setRecipe("");
     setInputValue("");
+    setError("");
   }
 
   return (
@@ -67,7 +81,6 @@ export default function Main() {
             setError("");
           }}
         />
-
         <button className="add" disabled={!inputValue.trim()}>
           Add ingredient
         </button>
@@ -89,10 +102,22 @@ export default function Main() {
           ref={recipeSection}
           ingredients={ingredients}
           getRecipe={getRecipe}
+          isLoading={isLoading}
         />
       )}
 
-      {recipe && <ClaudeRecipe recipe={recipe} />}
+      {isLoading && (
+        <section
+          className="loading-container"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <div className="loading-spinner"></div>
+          <p>Chef Dylan is cooking up a recipe...</p>
+        </section>
+      )}
+
+      {recipe && !isLoading && <ClaudeRecipe recipe={recipe} />}
     </main>
   );
 }

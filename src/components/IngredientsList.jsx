@@ -4,6 +4,7 @@ export default function IngredientsList(props) {
       {ingredient.replace(/\b\w/g, (c) => c.toUpperCase())}
     </li>
   ));
+
   return (
     <section>
       <h2>Ingredients on hand:</h2>
@@ -16,7 +17,12 @@ export default function IngredientsList(props) {
             <h3>Ready for a recipe?</h3>
             <p>Generate a recipe from your list of ingredients.</p>
           </div>
-          <button onClick={props.getRecipe}>Get a recipe</button>
+          <button 
+            onClick={props.getRecipe}
+            disabled={props.isLoading}
+          >
+            {props.isLoading ? "Generating..." : "Get a recipe"}
+          </button>
         </div>
       )}
     </section>
