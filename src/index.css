@@ -60,9 +60,15 @@ main {
   cursor: pointer;
 }
 
+.add-ingredient-form > button.add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .add-ingredient-form > button.remove {
   background-color: #dc2626;
 }
+
 
 .add-ingredient-form > button.add::before {
   content: "+";
@@ -73,6 +79,15 @@ main {
   content: "-";
   margin-right: 5px;
 }
+
+.error {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin: 10px auto;
+  align-self: center;
+  text-align: center;
+}
+
 
 ul.ingredients-list {
   margin-bottom: 48px;

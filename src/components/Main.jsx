@@ -6,6 +6,8 @@ import { getRecipeFromChefClaude, getRecipeFromMistral } from "../ai";
 export default function Main() {
   const [ingredients, setIngredients] = React.useState([]);
   const [recipe, setRecipe] = React.useState("");
+  const [error, setError] = React.useState("");
+  const [inputValue, setInputValue] = React.useState("");
   const recipeSection = React.useRef(null);
 
   React.useEffect(() => {
@@ -26,13 +28,29 @@ export default function Main() {
   }
 
   function addIngredient(formData) {
-    const newIngredient = formData.get("ingredient");
-    setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
+    const newIngredient = formData
+      .get("ingredient")
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, " ");
+
+    if (!newIngredient) {
+      return;
+    }
+
+    if (ingredients.includes(newIngredient)) {
+      setError(`${newIngredient} already exists.`);
+      return;
+    }
+
+    setIngredients((prev) => [...prev, newIngredient]);
+    setInputValue("");
   }
 
   function clearIngredients() {
     setIngredients([]);
     setRecipe("");
+    setInputValue("");
   }
 
   return (
@@ -43,10 +61,28 @@ export default function Main() {
           placeholder="e.g. pasta"
           aria-label="Add ingredient"
           name="ingredient"
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            setError("");
+          }}
         />
-        <button className="add">Add ingredient</button>
-        {ingredients.length > 0 && <button className="remove" type="button" onClick={clearIngredients}>Clear ingredients</button>}
+
+        <button className="add" disabled={!inputValue.trim()}>
+          Add ingredient
+        </button>
+        {ingredients.length > 0 && (
+          <button className="remove" type="button" onClick={clearIngredients}>
+            Clear ingredients
+          </button>
+        )}
       </form>
+
+      {error && (
+        <p id="ingredient-error" className="error">
+          {error}
+        </p>
+      )}
 
       {ingredients.length > 0 && (
         <IngredientsList
